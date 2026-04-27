@@ -15,8 +15,8 @@ jobs:
 
       - name: Download EPG Data
         run: |
-          # Switching to a high-availability mirror
-          curl -L "https://raw.githubusercontent.com/fusu-fusu/epg-japan/main/xmltv.xml" -o guide.xml
+          # This is a high-availability CDN mirror
+          curl -L "https://cdn.jsDelivr.net/gh/fusu-fusu/epg-japan@main/xmltv.xml" -o guide.xml
 
       - name: Commit and Push
         run: |
