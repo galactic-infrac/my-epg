@@ -15,14 +15,14 @@ jobs:
 
       - name: Download EPG Data
         run: |
-          # This is a high-availability CDN mirror
-          curl -L "https://cdn.jsDelivr.net/gh/fusu-fusu/epg-japan@main/xmltv.xml" -o guide.xml
+          # Using a verified high-uptime mirror for Tokyo terrestrial
+          curl -L "https://raw.githubusercontent.com/sh0m0/jp-epg/master/e.xml" -o guide.xml
 
       - name: Commit and Push
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add guide.xml
-          # Only commit if the file actually changed or is new
-          git commit -m "Update EPG Data" || echo "No changes to commit"
+          # The '|| exit 0' ensures that if the file is the same, it doesn't crash
+          git commit -m "Update EPG Data" || exit 0
           git push
