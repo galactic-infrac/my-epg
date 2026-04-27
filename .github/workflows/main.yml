@@ -12,10 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Fetch EPG
+     - name: Download EPG Data
         run: |
-          # Pulling from the CDN mirror instead of raw GitHub
-          curl -L "https://cdn.jsdelivr.net/gh/sh0m0/jp-epg@master/e.xml" -o guide.xml
+          # Switching to the Japan Terebi active mirror (High Uptime)
+          curl -L "https://animenosekai.github.io/japanterebi-xmltv/guide.xml" -o guide.xml
 
       - name: Commit changes
         run: |
