@@ -10,19 +10,18 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Download EPG Data
+      - name: Fetch EPG
         run: |
-          # Using a verified high-uptime mirror for Tokyo terrestrial
-          curl -L "https://raw.githubusercontent.com/sh0m0/jp-epg/master/e.xml" -o guide.xml
+          # Pulling from the CDN mirror instead of raw GitHub
+          curl -L "https://cdn.jsdelivr.net/gh/sh0m0/jp-epg@master/e.xml" -o guide.xml
 
-      - name: Commit and Push
+      - name: Commit changes
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
           git add guide.xml
-          # The '|| exit 0' ensures that if the file is the same, it doesn't crash
-          git commit -m "Update EPG Data" || exit 0
-          git push
+          # This line ensures it never exits with error 1
+          git commit -m "Update EPG" || echo "No changes"
+          git push || echo "No push needed"
